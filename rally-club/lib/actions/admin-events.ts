@@ -7,17 +7,17 @@ import { slugify } from "@/lib/utils";
 import { z } from "zod";
 
 const eventFormSchema = z.object({
-  title: z.string().trim().min(3),
-  description: z.string().trim().min(10),
+  title: z.string().trim().min(3, "Title must be at least 3 characters"),
+  description: z.string().trim().min(10, "Description must be at least 10 characters"),
   excerpt: z.string().trim().optional(),
   category: z.enum(["padel", "pilates", "running", "social", "wellness", "fitness", "special"]),
-  locationName: z.string().trim().min(2),
-  locationArea: z.string().trim().min(2),
+  locationName: z.string().trim().min(2, "Venue name must be at least 2 characters"),
+  locationArea: z.string().trim().min(2, "Area must be at least 2 characters"),
   address: z.string().trim().optional(),
-  eventDate: z.string().min(1),
-  startTime: z.string().min(1),
+  eventDate: z.string().min(1, "Please pick a date"),
+  startTime: z.string().min(1, "Please pick a start time"),
   endTime: z.string().optional(),
-  pricePence: z.coerce.number().int().min(0),
+  pricePence: z.coerce.number().int().min(0, "Price can't be negative"),
   capacity: z.string().optional(),
   imageUrl: z.string().trim().optional(),
   hostName: z.string().trim().optional(),
@@ -26,6 +26,27 @@ const eventFormSchema = z.object({
   status: z.enum(["draft", "published", "sold_out", "cancelled", "completed"]),
   isFeatured: z.coerce.boolean().optional(),
 });
+
+const FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  description: "Description",
+  category: "Category",
+  locationName: "Venue name",
+  locationArea: "Area",
+  eventDate: "Date",
+  startTime: "Start time",
+  pricePence: "Price",
+  status: "Status",
+};
+
+function firstErrorMessage(error: z.ZodError): string {
+  const issue = error.issues[0];
+  if (!issue) return "Please check the form and try again.";
+  const field = String(issue.path[0] ?? "");
+  const label = FIELD_LABELS[field];
+  const isGeneric = /^(String|Number|Required|Invalid)/.test(issue.message);
+  return label && isGeneric ? `${label}: ${issue.message}` : issue.message;
+}
 
 export type EventActionResult = { ok: true; slug: string } | { ok: false; error: string };
 

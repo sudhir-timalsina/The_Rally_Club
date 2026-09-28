@@ -54,7 +54,7 @@ export function EventForm({ event }: { event?: RallyEvent }) {
       : await createEvent(formData);
 
     if (result.ok) {
-      router.push("/admin/dashboard/events");
+      router.push(`/admin/dashboard/events?${isEdit ? "updated" : "created"}=1`);
       router.refresh();
     } else {
       setError(result.error);

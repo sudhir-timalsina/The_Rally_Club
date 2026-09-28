@@ -8,49 +8,52 @@ import { createClient } from "@/lib/supabase/client";
 import { BookingConfirmationCard, type PublicBooking } from "@/components/booking-confirmation-card";
 
 const POLL_INTERVAL_MS = 2500;
-const MAX_ATTEMPTS = 16; // ~40 seconds
+const MAX_ATTEMPTS = 16; // ~40 seconds, then we stop and show a fallback
 
 export function ConfirmationPoller({ sessionId }: { sessionId: string }) {
   const [booking, setBooking] = useState<PublicBooking | null>(null);
-  const [attempts, setAttempts] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
-    if (booking || timedOut) return;
-
     const supabase = createClient();
     let cancelled = false;
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
     const check = async () => {
-      const { data } = await supabase.rpc("get_booking_public", {
-        p_session_id: sessionId,
-        p_reference: null,
-      });
-      if (cancelled) return;
-      const row = Array.isArray(data) ? data[0] : data;
-      if (row) {
-        setBooking(row as PublicBooking);
-      } else {
-        setAttempts((a) => a + 1);
+      let row: PublicBooking | null = null;
+      try {
+        const { data } = await supabase.rpc("get_booking_public", {
+          p_session_id: sessionId,
+          p_reference: null,
+        });
+        row = ((Array.isArray(data) ? data[0] : data) as PublicBooking) || null;
+      } catch (err) {
+        console.error("[ConfirmationPoller] lookup failed:", err);
       }
+
+      if (cancelled) return;
+
+      if (row) {
+        setBooking(row);
+        return;
+      }
+
+      attempts += 1;
+      if (attempts >= MAX_ATTEMPTS) {
+        setTimedOut(true);
+        return;
+      }
+      timer = setTimeout(check, POLL_INTERVAL_MS);
     };
 
     check();
-    const interval = setInterval(() => {
-      if (attempts >= MAX_ATTEMPTS) {
-        setTimedOut(true);
-        clearInterval(interval);
-        return;
-      }
-      check();
-    }, POLL_INTERVAL_MS);
 
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      if (timer) clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attempts, booking, timedOut, sessionId]);
+  }, [sessionId]);
 
   if (booking) {
     return <BookingConfirmationCard booking={booking} />;
@@ -66,9 +69,14 @@ export function ConfirmationPoller({ sessionId }: { sessionId: string }) {
           if it doesn&apos;t arrive within a few minutes, please get in touch
           and we&apos;ll sort it out right away.
         </p>
-        <Button asChild variant="secondary">
-          <Link href="/contact">Contact Us</Link>
-        </Button>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Button variant="secondary" onClick={() => window.location.reload()}>
+            Check Again
+          </Button>
+          <Button asChild>
+            <Link href="/contact">Contact Us</Link>
+          </Button>
+        </div>
       </div>
     );
   }

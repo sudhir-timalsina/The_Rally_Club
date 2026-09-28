@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Plus } from "lucide-react";
 import { getAllEventsAdmin } from "@/lib/admin-data";
 import { formatEventDate, formatGBP } from "@/lib/utils";
 import { EVENT_CATEGORY_LABELS } from "@/types";
 import { EventRowActions } from "@/components/admin/event-row-actions";
+import { ActionBanner } from "@/components/admin/action-banner";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,10 @@ export default async function AdminEventsPage() {
 
   return (
     <div>
+      <Suspense fallback={null}>
+        <ActionBanner />
+      </Suspense>
+
       <div className="flex items-center justify-between mb-8">
         <div>
           <p className="eyebrow mb-2">Manage</p>

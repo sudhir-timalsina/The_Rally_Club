@@ -44,6 +44,10 @@ function firstErrorMessage(error: z.ZodError): string {
   if (!issue) return "Please check the form and try again.";
   const field = String(issue.path[0] ?? "");
   const label = FIELD_LABELS[field];
+  // If the message is still Zod's generic default (no custom message was
+  // set on that field), prefix it with the field name so it's actually
+  // actionable instead of a bare "String must contain at least..." with no
+  // indication of which box on the form it's talking about.
   const isGeneric = /^(String|Number|Required|Invalid)/.test(issue.message);
   return label && isGeneric ? `${label}: ${issue.message}` : issue.message;
 }
@@ -54,7 +58,7 @@ export async function createEvent(formData: FormData): Promise<EventActionResult
   const raw = Object.fromEntries(formData.entries());
   const parsed = eventFormSchema.safeParse(raw);
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.issues[0]?.message || "Invalid form data" };
+    return { ok: false, error: firstErrorMessage(parsed.error) };
   }
 
   const supabase = createClient();
@@ -101,7 +105,7 @@ export async function updateEvent(id: string, formData: FormData): Promise<Event
   const raw = Object.fromEntries(formData.entries());
   const parsed = eventFormSchema.safeParse(raw);
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.issues[0]?.message || "Invalid form data" };
+    return { ok: false, error: firstErrorMessage(parsed.error) };
   }
 
   const supabase = createClient();

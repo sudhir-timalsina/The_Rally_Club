@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/legal-layout";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | The Rally Club",
@@ -9,14 +10,10 @@ export const metadata: Metadata = {
 
 export default function CookiesPage() {
   return (
-    <LegalLayout title="Cookie Policy">
+    <LegalLayout title="Cookie Policy" updated="29 September 2026">
       <p>
-        <strong>Last updated: 29 September 2026</strong>
-      </p>
-
-      <p>
-        This Cookie Policy explains how The Rally Club ("The Rally Club",
-        "we", "us" or "our") uses cookies and similar technologies when you
+        This Cookie Policy explains how The Rally Club (&quot;The Rally Club&quot;,
+        &quot;we&quot;, &quot;us&quot; or &quot;our&quot;) uses cookies and similar technologies when you
         visit our website.
       </p>
 
@@ -162,9 +159,12 @@ export default function CookiesPage() {
       <p>
         <strong>The Rally Club</strong>
         <br />
-        Email: [INSERT EMAIL ADDRESS]
+        Email:{" "}
+        <a href={`mailto:${siteConfig.contact.email}`}>
+          {siteConfig.contact.email}
+        </a>
         <br />
-        Website: [INSERT WEBSITE URL]
+        Website: <a href={siteConfig.url}>{siteConfig.url}</a>
       </p>
     </LegalLayout>
   );

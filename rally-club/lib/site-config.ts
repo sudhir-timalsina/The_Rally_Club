@@ -49,12 +49,7 @@ export const siteConfig = {
     ],
   },
   categories: [
-    { key: "padel", label: "Padel" },
-    { key: "pilates", label: "Pilates" },
-    { key: "running", label: "Running" },
     { key: "social", label: "Social" },
-    { key: "wellness", label: "Wellness" },
-    { key: "fitness", label: "Fitness" },
     { key: "special", label: "Special Events" },
   ],
 } as const;

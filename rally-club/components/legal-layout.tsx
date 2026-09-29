@@ -37,3 +37,17 @@ export function PlaceholderNotice() {
     </div>
   );
 }
+
+export function ReviewNotice() {
+  return (
+    <div className="rounded-sm border border-dashed border-line bg-bone px-5 py-4 text-sm text-chocolate/70">
+      <strong className="text-chocolate">Working draft.</strong> This page
+      reflects The Rally Club&apos;s actual booking and refund policy and
+      follows standard UK GDPR practice, but a few bracketed details still
+      need filling in, and no written policy can fully prevent a claim being
+      made against the business. We&apos;d still recommend a solicitor
+      familiar with UK consumer and data protection law reviews this before
+      it&apos;s relied on for real transactions.
+    </div>
+  );
+}

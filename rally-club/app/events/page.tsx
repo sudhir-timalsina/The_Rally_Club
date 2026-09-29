@@ -41,8 +41,7 @@ export default async function EventsPage({
               Find your next Rally
             </h1>
             <p className="mt-6 text-lg text-chocolate/70 max-w-lg leading-relaxed">
-              Padel socials, pilates classes, wellness mornings and more —
-              browse what&apos;s on across {siteConfig.contact.area}.
+              Discover experiences designed to move, connect and bring women together across {siteConfig.contact.area}.
             </p>
           </Reveal>
         </div>

@@ -5,11 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { NavLogo } from "@/components/logo";
+import { LogoBadge, LogoWordmark } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
+/**
+ * NOTE — tied to EVENTS_ONLY_MODE in middleware.ts.
+ * While the site is restricted to the Events pages only, the full nav list
+ * and the "Join Community" link are hidden here too, since every other
+ * page would just redirect back to /events anyway. When EVENTS_ONLY_MODE
+ * is switched off, restore the original nav list (siteConfig.nav) and the
+ * Join Community button, and point the logo back at "/".
+ */
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -44,28 +51,12 @@ export function Navbar() {
       )}
     >
       <nav className="container-edit flex items-center justify-between py-4">
-        <NavLogo />
-
-        <ul className="hidden lg:flex items-center gap-8">
-          {siteConfig.nav.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={cn(
-                  "text-[0.9rem] link-underline pb-0.5",
-                  pathname === item.href ? "text-chocolate font-medium" : "text-chocolate/80"
-                )}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Link href="/events" className="flex items-center gap-3 group" aria-label="The Rally Club — Events">
+          <LogoBadge size={42} />
+          <LogoWordmark />
+        </Link>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/community">Join Community</Link>
-          </Button>
           <Button asChild variant="primary" size="sm">
             <Link href="/events">Book an Event</Link>
           </Button>
@@ -90,27 +81,7 @@ export function Navbar() {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="lg:hidden overflow-hidden bg-cream border-t border-line"
           >
-            <ul className="container-edit flex flex-col py-6 gap-1">
-              {siteConfig.nav.map((item, i) => (
-                <motion.li
-                  key={item.href}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 + 0.05 }}
-                >
-                  <Link
-                    href={item.href}
-                    className="block py-3 text-lg font-display border-b border-line/70"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-            <div className="container-edit flex flex-col gap-3 pb-8">
-              <Button asChild variant="secondary">
-                <Link href="/community">Join the Community</Link>
-              </Button>
+            <div className="container-edit flex flex-col gap-3 py-6">
               <Button asChild variant="primary">
                 <Link href="/events">Book an Event</Link>
               </Button>

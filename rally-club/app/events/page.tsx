@@ -40,7 +40,7 @@ export default async function EventsPage({
             <h1 className="text-display-md max-w-2xl !text-chocolate-soft uppercase">
               Find Your Next Event
             </h1>
-            <p className="mt-5 text-sm sm:text-base text-chocolate-soft max-w-lg leading-relaxed uppercase tracking-wideish">
+            <p className="mt-5 text-sm sm:text-base text-chocolate-soft max-w-lg leading-relaxed tracking-wideish">
               Discover experiences designed to move, connect and bring women together across {siteConfig.contact.area}.
             </p>
           </Reveal>

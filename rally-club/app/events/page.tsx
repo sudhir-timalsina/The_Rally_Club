@@ -38,7 +38,7 @@ export default async function EventsPage({
           <Reveal>
             <p className="eyebrow mb-5">Events</p>
             <h1 className="text-display-lg max-w-2xl">
-              Find your next Rally
+              FIND OUR NEXT RALLY
             </h1>
             <p className="mt-6 text-lg text-chocolate/70 max-w-lg leading-relaxed">
               Discover experiences designed to move, connect and bring women together across {siteConfig.contact.area}.

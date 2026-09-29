@@ -18,7 +18,7 @@ export function LegalLayout({
           {updated && <p className="mt-3 text-sm text-chocolate/50">Last updated: {updated}</p>}
         </Reveal>
         <Reveal delay={0.1}>
-          <div className="mt-10 prose-legal space-y-6 text-chocolate/75 leading-relaxed [&_h2]:font-display [&_h2]:text-xl [&_h2]:text-chocolate [&_h2]:mt-10 [&_h2]:mb-3">
+          <div className="mt-10 prose-legal space-y-6 text-chocolate/75 leading-relaxed [&_h2]:font-display [&_h2]:text-xl [&_h2]:text-chocolate [&_h2]:mt-10 [&_h2]:mb-3 [&_h3]:font-display [&_h3]:text-lg [&_h3]:text-chocolate [&_h3]:mt-6 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:text-chocolate">
             {children}
           </div>
         </Reveal>

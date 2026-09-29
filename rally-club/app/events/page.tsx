@@ -33,20 +33,20 @@ export default async function EventsPage({
 
   return (
     <>
-      <section className="pt-14 pb-10 sm:pt-20">
+      <section className="bg-chocolate text-cream pt-14 pb-10 sm:pt-20">
         <div className="container-edit">
           <Reveal>
-            <p className="eyebrow mb-5">Events</p>
-            <h1 className="text-display-lg max-w-2xl">
-              FIND YOUR NEXT RALLY
+            <p className="eyebrow mb-5 !text-taupe-light">Events</p>
+            <h1 className="text-display-lg max-w-2xl !text-cream">
+              Find your next Rally
             </h1>
-            <p className="mt-6 text-lg text-chocolate/70 max-w-lg leading-relaxed">
+            <p className="mt-6 text-lg text-cream/75 max-w-lg leading-relaxed">
               Discover experiences designed to move, connect and bring women together across {siteConfig.contact.area}.
             </p>
           </Reveal>
         </div>
       </section>
-
+      
       <section className="hairline">
         <div className="container-edit py-6">
           <Suspense>

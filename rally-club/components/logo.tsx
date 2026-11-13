@@ -23,9 +23,9 @@ export function LogoBadge({ size = 44, className }: { size?: number; className?:
 export function LogoWordmark({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col leading-none", className)}>
-      <span className="text-[0.62rem] tracking-label uppercase text-taupe-dark">THE</span>
-      <span className="font-display text-xl tracking-tight -mt-0.5">RALLY</span>
-      <span className="text-[0.62rem] tracking-label uppercase text-taupe-dark -mt-0.5">CLUB</span>
+      <span className="text-[0.62rem] tracking-label uppercase text-taupe-dark">The</span>
+      <span className="font-display text-xl uppercase tracking-[0.14em] -mt-0.5">Rally</span>
+      <span className="text-[0.62rem] tracking-label uppercase text-taupe-dark -mt-0.5">Club</span>
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Mail } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/page-hero";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
+import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionItem,
@@ -8,6 +12,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { getPublishedFaqs } from "@/lib/data";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -88,26 +93,54 @@ export default async function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <section className="pt-14 pb-10 sm:pt-20">
-        <div className="container-edit">
-          <Reveal>
-            <p className="eyebrow mb-5">FAQ</p>
-            <h1 className="text-display-lg max-w-xl">Questions, answered</h1>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="FAQ"
+        title="Questions, answered"
+        description="Everything you might want to know before your first Rally — from coming alone to how booking works."
+        image={{
+          src: "/images/crop_women_coffee_table.jpg",
+          alt: "Rally Club members chatting over coffee",
+        }}
+      />
 
-      <section className="pb-20">
-        <div className="container-edit max-w-2xl">
-          <Reveal>
-            <Accordion type="single" collapsible className="w-full">
-              {items.map((faq) => (
+      <section className="pb-20 sm:pb-28">
+        <div className="container-edit grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <Reveal className="order-1 lg:order-2 lg:col-span-8">
+            <Accordion type="single" collapsible defaultValue={items[0]?.id} className="space-y-3">
+              {items.map((faq, i) => (
                 <AccordionItem key={faq.id} value={faq.id}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionTrigger>
+                    <span className="font-body text-xs tracking-label text-taupe-dark">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{faq.question}</span>
+                  </AccordionTrigger>
                   <AccordionContent>{faq.answer}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+          </Reveal>
+
+          <Reveal delay={0.1} className="order-2 lg:order-1 lg:col-span-4">
+            <div className="rounded-sm bg-chocolate p-7 text-cream sm:p-9 lg:sticky lg:top-28">
+              <p className="eyebrow mb-3 text-cream/55">Still curious?</p>
+              <h2 className="font-display text-2xl leading-snug">
+                Can’t find what you’re looking for?
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-cream/70">
+                Send us a message or pop into the WhatsApp community — we’re
+                happy to help with anything before your first event.
+              </p>
+              <Button asChild variant="pink" className="mt-6 w-full">
+                <Link href="/contact">Get in touch</Link>
+              </Button>
+              <a
+                href={`mailto:${siteConfig.contact.email}`}
+                className="mt-4 inline-flex items-center gap-2 text-sm text-cream/75 transition-colors hover:text-cream"
+              >
+                <Mail size={15} /> {siteConfig.contact.email}
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

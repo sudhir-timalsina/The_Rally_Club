@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/page-hero";
 import { EventCard } from "@/components/event-card";
 import { EmptyState } from "@/components/empty-state";
 import { getUpcomingEvents, getPastEvents } from "@/lib/data";
@@ -20,17 +21,10 @@ export default async function EventsPage() {
 
   return (
     <>
-      <section className="pt-14 pb-10 sm:pt-20">
-        <div className="container-edit">
-          <Reveal>
-            <h1 className="text-display-lg max-w-2xl">Rally events</h1>
-            <p className="mt-6 text-lg text-chocolate/70 max-w-lg leading-relaxed">
-              Move, meet, have fun. Explore our upcoming events and find
-              something you’d love to be part of.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        title="Rally events"
+        description="Move, meet, have fun. Explore our upcoming events and find something you’d love to be part of."
+      />
 
       <section className="hairline py-16 sm:py-20">
         <div className="container-edit">

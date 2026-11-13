@@ -9,8 +9,31 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Why I Started Rally",
   description:
-    "Holly Storey on the idea behind The Rally Club — and why she wanted to build a community where women could move, connect and belong.",
+    "Holly Storey on why she started The Rally Club — a women’s community for meeting new people through the things you genuinely enjoy.",
 };
+
+// To change the photos: add the new images to public/images and update these paths.
+const STORY_BANNER = "/images/crop_founder_bw_photo_only.jpg";
+const FOUNDER_AVATAR = "/images/crop_founder_color_card.jpg";
+
+const LEAD =
+  "I kept coming back to the same thought: why is it so hard to meet new people as an adult?";
+
+const STORY: string[] = [
+  "I moved to the area around seven years ago and found that making new friends wasn’t always easy. I work from home, I’m a mum, and life can get very busy. I was lucky enough to meet some amazing people through netball, and what I loved was that we already had something in common. We were there because we enjoyed the same sport, so conversation came naturally and friendships followed.",
+  "I even tried Bumble BFF and met some genuinely great friends through it. Again, the thing that made it easier was having common interests. You already have a starting point — something you both enjoy, something to talk about, somewhere to go together.",
+  "That really stuck with me.",
+  "Then I discovered PADEL.",
+  "I loved that it was active without feeling like a workout, social without being forced, and competitive without needing to take it too seriously. You could turn up not knowing anyone, but you already had something in common: you were both there to play. Within an hour, you’re chatting, laughing and getting to know each other without that awkward “so… what do you do?” feeling.",
+  "And that’s when the idea for The Rally Club really started to come together.",
+  "I thought, what if I brought all of those things together under one roof?",
+  "Different activities, different interests and different experiences — but all designed to give women a natural reason to meet. You might come for Padel, Pilates, a creative workshop, a wellness event or a social, but the common thread is that you’re surrounded by women who are there for the same reason.",
+  "I didn’t want to create another gym or another fitness class. I wanted to create somewhere where the shared interest opens the door, and friendship is what happens next.",
+  "So that’s Rally.",
+  "It started with Padel, but it’s grown into so much more — Pilates, wellness, socials, creative workshops, food, drinks and experiences, all bringing women together through things they genuinely enjoy.",
+  "Play. Connect. Belong.",
+  "Because I know from my own experience that making friends as an adult doesn’t have to be awkward. Sometimes you just need something in common, somewhere to go, and a reason to say hello.",
+];
 
 export default function WhyWeStartedPage() {
   return (
@@ -18,18 +41,15 @@ export default function WhyWeStartedPage() {
       <section className="pt-14 pb-10 sm:pt-20">
         <div className="container-edit">
           <Reveal>
-            <p className="eyebrow mb-5">Why I started Rally</p>
-            <h1 className="text-display-lg max-w-2xl">
-              This is the community I wished existed
-            </h1>
+            <h1 className="text-display-lg max-w-2xl">Why I started Rally</h1>
           </Reveal>
         </div>
       </section>
 
       <section className="relative h-[45vh] min-h-[320px] max-h-[500px]">
         <Image
-          src="/images/crop_founder_bw_photo_only.jpg"
-          alt="Holly Storey, Founder of The Rally Club"
+          src={STORY_BANNER}
+          alt={siteConfig.founder.name}
           fill
           sizes="100vw"
           className="object-cover"
@@ -46,38 +66,17 @@ export default function WhyWeStartedPage() {
             <Reveal>
               <div className="space-y-7 text-[1.05rem] leading-relaxed text-chocolate/80 max-w-2xl">
                 <p className="font-display text-2xl sm:text-3xl italic leading-snug text-chocolate">
-                  &ldquo;I kept noticing the same thing — brilliant, busy women who
-                  wanted to move more and meet people, but couldn&apos;t find a
-                  space that felt right for either.&rdquo;
+                  {LEAD}
                 </p>
-                <p>
-                  Placeholder founder story — replace with Holly&apos;s own words.
-                  This is where the personal story behind Rally belongs: what
-                  prompted the idea, what was missing from existing fitness and
-                  social spaces, and the moment it became clear this was worth
-                  building.
-                </p>
-                <p>
-                  [Placeholder] Gyms felt transactional. Class timetables came and
-                  went without anyone actually speaking to one another. Social
-                  events revolved around sitting still. There didn&apos;t seem to
-                  be a space built specifically for women to do both — move their
-                  bodies and build real connections — without it feeling
-                  intimidating to show up alone.
-                </p>
-                <p>
-                  [Placeholder] So Rally started small: a handful of women, a
-                  padel court, and an invitation to just turn up. What mattered
-                  wasn&apos;t the score at the end of the match — it was the
-                  conversation afterwards, the plans made for next week, the
-                  sense that everyone belonged there.
-                </p>
-                <p>
-                  [Placeholder] That&apos;s the vision behind Rally today: a community
-                  where movement is the reason we gather, but connection is what
-                  keeps us coming back. Every event, every partnership, and every
-                  detail is designed around that one idea.
-                </p>
+                {STORY.map((paragraph, i) =>
+                  paragraph.length < 50 ? (
+                    <p key={i} className="font-display text-2xl text-chocolate">
+                      {paragraph}
+                    </p>
+                  ) : (
+                    <p key={i}>{paragraph}</p>
+                  )
+                )}
               </div>
             </Reveal>
 
@@ -85,7 +84,7 @@ export default function WhyWeStartedPage() {
               <div className="mt-12 pt-8 hairline flex items-center gap-4">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden shrink-0">
                   <Image
-                    src="/images/crop_founder_color_card.jpg"
+                    src={FOUNDER_AVATAR}
                     alt={siteConfig.founder.name}
                     fill
                     sizes="56px"

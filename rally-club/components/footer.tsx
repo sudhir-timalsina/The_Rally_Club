@@ -3,11 +3,19 @@ import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { LogoBadge } from "@/components/logo";
 import { siteConfig } from "@/lib/site-config";
 
+/**
+ * NOTE — tied to EVENTS_ONLY_MODE in middleware.ts.
+ * The Explore/Rally footer columns (About, Founder, Community, Partners,
+ * FAQ) are hidden while those pages redirect to /events. Legal links stay,
+ * since Terms/Privacy/Cookies remain reachable regardless of the mode, and
+ * the booking checkbox links directly to /legal/terms. When EVENTS_ONLY_MODE
+ * is switched off, restore siteConfig.footerLinks.explore and .company.
+ */
 export function Footer() {
   return (
     <footer className="bg-chocolate text-cream">
       <div className="container-edit pt-16 pb-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-8">
           <div className="col-span-2">
             <div className="flex items-center gap-3 mb-5">
               <LogoBadge size={48} />
@@ -45,8 +53,10 @@ export function Footer() {
             </div>
           </div>
 
-          <FooterCol title="Explore" links={siteConfig.footerLinks.explore} />
-          <FooterCol title="Rally" links={siteConfig.footerLinks.company} />
+          <FooterCol
+            title="Explore"
+            links={[{ label: "Events", href: "/events" }]}
+          />
           <FooterCol title="Legal" links={siteConfig.footerLinks.legal} />
         </div>
 

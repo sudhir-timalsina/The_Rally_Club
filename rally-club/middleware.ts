@@ -2,16 +2,21 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * SITE MODE SWITCH
+ * TEMPORARY SITE MODE
  * ---------------------------------------------------------------------
- * false = the full website is live (current setting).
- * true  = every public page except /events redirects to /events.
- *         (/admin, /api and /legal are always left alone.)
+ * While true, every public page except /events (and its sub-pages, e.g.
+ * /events/some-event and its /confirmation page) redirects to /events.
+ * /admin and /api are always left alone regardless of this flag, so the
+ * admin dashboard and Stripe webhook keep working normally.
  *
- * To restrict the site again, set this to true, redeploy, and swap in the
- * events-only navbar/footer.
+ * /legal is also always left alone — the booking form links to
+ * /legal/terms as part of its required "I agree to the terms" checkbox,
+ * so that page has to stay reachable for the checkbox to mean anything.
+ *
+ * To bring the rest of the site back, set this to false (or delete this
+ * block) and redeploy. Nothing else needs to change.
  */
-const EVENTS_ONLY_MODE = false;
+const EVENTS_ONLY_MODE = true;
 
 const ALWAYS_ALLOWED_PREFIXES = ["/events", "/admin", "/api", "/legal"];
 
@@ -26,11 +31,6 @@ export async function middleware(request: NextRequest) {
 
   if (EVENTS_ONLY_MODE && !isAlwaysAllowed(pathname)) {
     return NextResponse.redirect(new URL("/events", request.url));
-  }
-
-  // Only admin pages need the login/session check.
-  if (!pathname.startsWith("/admin")) {
-    return NextResponse.next();
   }
 
   let response = NextResponse.next({ request: { headers: request.headers } });
@@ -59,7 +59,8 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const isAdminRoute = !pathname.startsWith("/admin/login");
+  const isAdminRoute =
+    pathname.startsWith("/admin") && !pathname.startsWith("/admin/login");
 
   if (isAdminRoute && !session) {
     const loginUrl = new URL("/admin/login", request.url);

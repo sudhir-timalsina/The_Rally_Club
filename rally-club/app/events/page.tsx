@@ -22,7 +22,7 @@ export default async function EventsPage() {
   return (
     <>
       <PageHero
-        title="Rally Club events"
+        title="Rally Club Events"
         description="Move, meet, have fun. Explore our upcoming events and find something you’d love to be part of."
       />
 

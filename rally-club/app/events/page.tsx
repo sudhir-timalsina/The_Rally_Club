@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { getUpcomingEvents, getPastEvents } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Events",
+  title: "Club Events",
   description:
     "Move, meet, have fun. Explore upcoming events with The Rally Club and find something you’d love to be part of.",
 };

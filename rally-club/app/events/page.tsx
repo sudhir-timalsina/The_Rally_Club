@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { getUpcomingEvents, getPastEvents } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Club Events",
+  title: "Events",
   description:
     "Move, meet, have fun. Explore upcoming events with The Rally Club and find something you’d love to be part of.",
 };
@@ -22,7 +22,7 @@ export default async function EventsPage() {
   return (
     <>
       <PageHero
-        title="Rally events"
+        title="Rally Club events"
         description="Move, meet, have fun. Explore our upcoming events and find something you’d love to be part of."
       />
 

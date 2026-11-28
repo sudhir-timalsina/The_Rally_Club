@@ -146,9 +146,12 @@ export function BookingWidget({
       </Button>
 
       {!isFree && (
-        <p className="flex items-center justify-center gap-1.5 text-xs text-chocolate/45">
-          <ShieldCheck size={13} /> Secure payment via Stripe. Card details never touch our servers.
-        </p>
+        <div className="space-y-1.5 text-center">
+          <p className="text-xs text-chocolate/55">Have a discount code? You can enter it on the next page.</p>
+          <p className="flex items-center justify-center gap-1.5 text-xs text-chocolate/45">
+            <ShieldCheck size={13} /> Secure payment via Stripe. Card details never touch our servers.
+          </p>
+        </div>
       )}
     </form>
   );

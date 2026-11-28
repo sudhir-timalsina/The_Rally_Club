@@ -106,7 +106,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     p_stripe_session_id: session.id,
     p_stripe_payment_intent_id:
       typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id || null,
-    p_payment_status: "paid",
+        p_payment_status: isFullyDiscounted ? "not_required" : "paid",
     p_notes: metadata.notes || null,
   });
 

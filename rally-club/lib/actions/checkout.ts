@@ -101,8 +101,9 @@ export async function createBookingCheckout(formData: FormData): Promise<Checkou
   // ---- Paid event: create a Stripe Checkout Session ---------------------
   try {
     const stripe = getStripe();
-    const session = await stripe.checkout.sessions.create({
+      const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      allow_promotion_codes: true,
       payment_method_types: ["card"],
       customer_email: input.email,
       line_items: [

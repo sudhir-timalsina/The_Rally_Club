@@ -71,9 +71,17 @@ export async function POST(request: Request) {
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
-  if (session.payment_status !== "paid") {
+   // A 100%-off promo code leaves nothing to pay: Stripe completes the session
+  // with payment_status "no_payment_required" and a total of 0. That is a valid
+  // booking, so accept it alongside normal paid sessions.
+  const isPaid = session.payment_status === "paid";
+  const isFullyDiscounted =
+    session.payment_status === "no_payment_required" && (session.amount_total ?? 0) === 0;
+
+  if (!isPaid && !isFullyDiscounted) {
     console.info(`[stripe-webhook] Session ${session.id} not yet paid (${session.payment_status}); skipping.`);
     return;
+  }
   }
 
   const metadata = session.metadata || {};
